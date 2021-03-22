@@ -11,6 +11,20 @@ body {
   background: #f0f2f5;
   font-family: "Poppins", sans-serif;
 }
+html {
+  font-size: 95.73;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: ;
+}
 .container {
   width: min(90vw, 800px);
   margin: auto;
@@ -32,6 +46,18 @@ h2 {
   color: var(--dark);
   font-weight: normal;
 }
+/******* Links & Buttons ********/
+a {
+  color: #49aa26;
+  text-decoration: none;
+}
+a:hover {
+  color: #3dd705;
+}
+.button.new {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+}
 /******* Balance ********/
 #balance {
   margin-top: -8rem;
@@ -49,6 +75,9 @@ h2 {
 .card h3 {
   font-weight: normal;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .card p {
   font-size: 2rem;
@@ -60,6 +89,11 @@ h2 {
   color: #fff;
 }
 /******* Table ********/
+#transaction {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
 #data-table {
   width: 100%;
   border-spacing: 0 0.5rem;
@@ -68,6 +102,10 @@ h2 {
 table thead tr th:first-child,
 table tbody tr td:first-child {
   border-radius: 0.25rem 0 0.25rem;
+}
+table thead tr th:last-child,
+table tbody tr td:last-child {
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 table thead tr th {
   background: #fff;
@@ -102,4 +140,25 @@ footer {
   padding: 4rem 0 2rem;
   color: var(--dark);
   opacity: 0.7;
+}
+/******* Modal ********/
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+}
+
+/******* footer ********/
+
+@media (min-width: 800px) {
+  html {
+    font-size: 87.5%;
+  }
+  #balance {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
 }
