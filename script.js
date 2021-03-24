@@ -1,10 +1,3 @@
-
-function open() {
-  document.querySelector('.modal-overlay').classList.toggle('active');
-}
-function close() {
-  document.querySelector('.modal-overlay').classList.toggle('active');
-}
 function toggle() {
   document.querySelector('.modal-overlay').classList.toggle('active');
 }
@@ -17,44 +10,65 @@ cancel.addEventListener('click', Modal.toggle);
 const transactions = [
   {
     id: 1,
-    description: 'Luz',
+    description: 'Aluguel',
     amount: 50000,
     date: '23/03/2021'
   },
   {
     id: 2,
-    description: 'Luz',
+    description: 'WebSite',
     amount: 5000,
     date: '23/03/2021'
   },
   {
     id: 3,
-    description: 'Luz',
+    description: 'Agua',
     amount: -50000,
     date: '23/03/2021'
   },
   {
     id: 4,
-    description: 'Luz',
+    description: 'Pensão',
     amount: 5000,
     date: '23/03/2021'
   },
   {
     id: 5,
-    description: 'Luz',
+    description: 'Ração',
     amount: -5000,
     date: '23/03/2021'
   },
 ];
 const Transaction = {
+  all: transactions,
+  add(transaction) {
+    this.all.push(transaction);
+    App.reload();
+  },
+  remove(index) {
+    this.all.splice(index, 1);
+    App.reload();
+  },
   incomes() {
-
+    let income = 0;
+    this.all.forEach((transaction) => {
+      if (transaction.amount > 0) {
+        income += transaction.amount;
+      }
+    })
+    return income;
   },
   expenses() {
-
+    let expense = 0;
+    this.all.forEach((transaction) => {
+      if (transaction.amount < 0) {
+        expense += transaction.amount;
+      }
+    })
+    return expense;
   },
   total() {
-
+    return this.incomes() + this.expenses();
   }
 }
 const DOM = {
@@ -79,11 +93,19 @@ const DOM = {
     </td>
     `;
     return html;
+  },
+  updateBalance() {
+    document.querySelector('#incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes());
+    document.querySelector('#expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses());
+    document.querySelector('#totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total());
+  },
+  clearTransactions() {
+    this.transactionsContainer.innerHTML = '';
   }
 }
 const Utils = {
   formatCurrency(value) {
-    console.log(value);
+
     const signal = Number(value) < 0 ? "-" : "";
     value = String(value).replace(/\D/g, "");
     value = Number(value) / 100;
@@ -95,6 +117,23 @@ const Utils = {
 
   }
 }
-transactions.forEach((item) => {
-  DOM.addTransaction(item);
-});
+const Form = {
+  submit(event) {
+    console.log(event);
+    event.preventDefault();
+  }
+}
+const App = {
+  init() {
+
+    Transaction.all.forEach((item) => {
+      DOM.addTransaction(item);
+    });
+    DOM.updateBalance();
+  },
+  reload() {
+    DOM.clearTransactions();
+    this.init();
+  }
+}
+App.init();
